@@ -1,0 +1,29 @@
+---
+#
+# typical run:
+#
+# ansible-playbook -i env/<ENVIRONMENT> pi-shutdown.yml
+#
+#
+
+- name: Install pi-shutdown as systemd service
+  hosts: volumio
+  gather_facts: false
+
+  vars:
+    systemd_service: "pi-shutdown"
+    systemd_service_template: "pi-shutdown.service.j2"
+
+    pi_shutdown_executable: "/etc/systemd/system/pi-shutdown.py"
+
+  roles:
+    - systemd
+
+  pre_tasks:
+
+    - name: "Copy pi-shutdown executable"
+      copy:
+        src: "../pi-shutdown.py"
+        dest: "{{ pi_shutdown_executable }}"
+        mode: 0700
+      become: yes
