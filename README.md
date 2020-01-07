@@ -1,3 +1,5 @@
+**This repository is archived**, it was superseded by https://github.com/layereight/gpio-trigger
+
 # pi-shutdown
 
 Trigger Raspberry Pi shutdown with GPIO push button.
