@@ -13,6 +13,7 @@
   vars:
     systemd_service: "pi-shutdown"
     systemd_service_template: "pi-shutdown.service.j2"
+#    systemd_service_remove: True
 
     pi_shutdown_executable: "/etc/systemd/system/pi-shutdown.py"
 
@@ -27,3 +28,11 @@
         dest: "{{ pi_shutdown_executable }}"
         mode: 0700
       become: yes
+      when: systemd_service_remove == False
+
+    - name: "Remove pi-shutdown executable"
+      file:
+        path: "{{ pi_shutdown_executable }}"
+        state: absent
+      become: yes
+      when: systemd_service_remove == True
